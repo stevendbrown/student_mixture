@@ -12,7 +12,7 @@ To install Student's t-mixture model, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install stmm
+    $ pip install student_mixture
 
 This is the preferred method to install Student's t-mixture model, as it will always install the most recent stable release.
 
@@ -32,13 +32,13 @@ You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/omritomer/stmm
+    $ git clone git://github.com/omritomer/student_mixture
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl -OJL https://github.com/omritomer/stmm/tarball/master
+    $ curl -OJL https://github.com/omritomer/student_mixture/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
@@ -47,5 +47,5 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/omritomer/stmm
-.. _tarball: https://github.com/omritomer/stmm/tarball/master
+.. _Github repo: https://github.com/omritomer/student_mixture
+.. _tarball: https://github.com/omritomer/student_mixture/tarball/master

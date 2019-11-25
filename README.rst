@@ -3,28 +3,28 @@ Student's t-mixture model
 =========================
 
 
-.. image:: https://img.shields.io/pypi/v/stmm.svg
-        :target: https://pypi.python.org/pypi/stmm
+.. image:: https://img.shields.io/pypi/v/student_mixture.svg
+        :target: https://pypi.python.org/pypi/student_mixture
 
-.. image:: https://img.shields.io/travis/omritomer/stmm.svg
-        :target: https://travis-ci.org/omritomer/stmm
+.. image:: https://img.shields.io/travis/omritomer/student_mixture.svg
+        :target: https://travis-ci.org/omritomer/student_mixture
 
-.. image:: https://readthedocs.org/projects/stmm/badge/?version=latest
-        :target: https://stmm.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/student-mixture/badge/?version=latest
+        :target: https://student-mixture.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
 
-.. image:: https://pyup.io/repos/github/omritomer/stmm/shield.svg
-     :target: https://pyup.io/repos/github/omritomer/stmm/
+.. image:: https://pyup.io/repos/github/omritomer/student_mixture/shield.svg
+     :target: https://pyup.io/repos/github/omritomer/student_mixture/
      :alt: Updates
 
 
 
-A package for fitting a multivariate Student's t-mixture model.
+A package for fitting a Student's t-mixture model
 
 
 * Free software: MIT license
-* Documentation: https://stmm.readthedocs.io.
+* Documentation: https://student-mixture.readthedocs.io.
 
 
 Features

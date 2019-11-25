@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-"""Unit test package for stmm."""
+"""Unit test package for student_mixture."""
