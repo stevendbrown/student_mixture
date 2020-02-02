@@ -4,7 +4,6 @@ from scipy import linalg
 from scipy.special import gammaln, digamma, polygamma
 from scipy.optimize import newton
 
-from sklearn.mixture.base import _check_shape
 from sklearn.utils.extmath import row_norms
 
 import warnings
@@ -13,7 +12,49 @@ from sklearn.utils import check_array
 
 
 ###############################################################################
+
 # Student mixture shape checkers used by the StudentMixture class
+def _check_shape(param, param_shape, name):
+    """Validate the shape of the input parameter 'param'.
+
+    Parameters
+    ----------
+    param : array
+
+    param_shape : tuple
+
+    name : string
+    """
+    param = np.array(param)
+    if param.shape != param_shape:
+        raise ValueError("The parameter '%s' should have the shape of %s, "
+                         "but got %s" % (name, param_shape, param.shape))
+
+
+def _check_X(X, n_components=None, n_features=None, ensure_min_samples=1):
+    """Check the input data X.
+
+    Parameters
+    ----------
+    X : array-like, shape (n_samples, n_features)
+
+    n_components : int
+
+    Returns
+    -------
+    X : array, shape (n_samples, n_features)
+    """
+    X = check_array(X, dtype=[np.float64, np.float32],
+                    ensure_min_samples=ensure_min_samples)
+    if n_components is not None and X.shape[0] < n_components:
+        raise ValueError('Expected n_samples >= n_components '
+                         'but got n_components = %d, n_samples = %d'
+                         % (n_components, X.shape[0]))
+    if n_features is not None and X.shape[1] != n_features:
+        raise ValueError("Expected the input data X have %d features, "
+                         "but got %d features"
+                         % (n_features, X.shape[1]))
+    return X
 
 
 def _check_weights(weights, n_components):
