@@ -3,9 +3,9 @@
 
 """The setup script."""
 
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, Extension
 
-with open('README.rst') as readme_file:
+with open('README.md') as readme_file:
     readme = readme_file.read()
 
 with open('HISTORY.rst') as history_file:
@@ -37,6 +37,7 @@ setup(
     description="A package for fitting a Student's t-mixture model",
     install_requires=requirements,
     license="MIT license",
+    long_description_content_type='text/markdown',
     long_description=readme + '\n\n' + history,
     include_package_data=True,
     keywords='student_mixture',
@@ -46,6 +47,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/omritomer/student_mixture',
-    version='0.1.0',
+    version='0.1.1',
     zip_safe=False,
 )
