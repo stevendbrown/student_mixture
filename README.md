@@ -38,11 +38,17 @@ python setup.py install
 
 # Citation
 If you used this package to estimate a mixture of Student's t-distributions, please cite references 1 and 2, which this package is an implementation of. 
+
 If you used this package to estimate a Student's t-distribution, please cite reference 3.
+
 The implementations above are structurally based on scikit-learn's mixture module, so please also cite scikit-learn according to their suggested format, which can be found [here]([https://scikit-learn.org/stable/about.html#citing-scikit-learn](https://scikit-learn.org/stable/about.html#citing-scikit-learn)).
+
 If you used the multivariate Student's t-distribution module, please cite reference 8. As this module is structurally based on scipy's stats.multivariate module, please also cite scipy according to their suggested format, which can be found [here]([https://www.scipy.org/citing.html](https://www.scipy.org/citing.html)).
+
 If you used the cumulative distribution function (CDF) for either a multivariate t-distribution or a Student's t-mixture model, please cite reference 4. In addition, for the following cases:
+
 A. If your data has two or three dimensions, please cite reference 5.
+
 B. If your data has four or more dimensions, please cite references 6 and 7.
 
 # Documentation
