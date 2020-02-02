@@ -14,7 +14,7 @@ pip install student-mixture
 ```
 From github:
 ```
-git https://github.com/omritomer/student_mixture.git
+git clone https://github.com/omritomer/student_mixture.git
 cd student_mixture
 python setup.py build
 python setup.py install
