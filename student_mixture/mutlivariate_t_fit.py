@@ -15,10 +15,10 @@ from sklearn.exceptions import ConvergenceWarning
 from sklearn.utils import check_random_state
 from sklearn.utils.fixes import logsumexp
 
-from multivariate_t_fit_functions import _check_X, _check_location, _check_dof, _check_precision,\
+from .multivariate_t_fit_functions import _check_X, _check_location, _check_dof, _check_precision,\
     _estimate_student_parameters, _compute_precision_cholesky, _compute_gamma_priors, _estimate_log_student_prob,\
     _initialize_dof, _estimate_dof
-from multivariate_t import multivariate_t
+from .multivariate_t import multivariate_t
 
 
 class MultivariateTFit():

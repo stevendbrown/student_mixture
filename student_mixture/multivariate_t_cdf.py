@@ -3,7 +3,7 @@ from scipy.linalg import pinv, sqrtm, cholesky
 from scipy.integrate import quad
 from scipy.stats import t
 from scipy.special import betainc
-from multivariate_t_mc import _multivariate_t_cdf_single_sample
+from .multivariate_t_mc import _multivariate_t_cdf_single_sample
 
 ###############################################################################
 # Functions that estimate the cumulative distribution function of the standard multivariate t-distribution

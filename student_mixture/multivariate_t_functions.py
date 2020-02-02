@@ -5,7 +5,7 @@ import numpy as np
 from scipy.stats import t
 from scipy.stats._multivariate import multivariate_normal
 from scipy.stats._continuous_distns import chi2
-from multivariate_t_cdf import _standard_t_cdf_bivariate, _standard_t_cdf_trivariate, _standard_t_cdf_multivariate
+from .multivariate_t_cdf import _standard_t_cdf_bivariate, _standard_t_cdf_trivariate, _standard_t_cdf_multivariate
 
 ###############################################################################
 # Multivariate Student's t-distribution functions
