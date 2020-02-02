@@ -47,9 +47,9 @@ If you used the multivariate Student's t-distribution module, please cite refere
 
 If you used the cumulative distribution function (CDF) for either a multivariate t-distribution or a Student's t-mixture model, please cite reference 4. In addition, for the following cases:
 
-A. If your data has two or three dimensions, please cite reference 5.
+- If your data has two or three dimensions, please cite reference 5.
 
-B. If your data has four or more dimensions, please cite references 6 and 7.
+- If your data has four or more dimensions, please cite references 6 and 7.
 
 # Documentation
 [Student's t-Mixture Model]([https://student-mixture.readthedocs.io/](https://student-mixture.readthedocs.io/))
