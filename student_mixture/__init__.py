@@ -4,7 +4,7 @@
 
 __author__ = """Omri Tomer"""
 __email__ = 'omritomer1@mail.tau.ac.il'
-__version__ = '0.0.1'
+__version__ = '0.1.0'
 
 import sys
 if (sys.version_info < (3, 3)):
