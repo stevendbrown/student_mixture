@@ -8,8 +8,8 @@ import numpy as np
 from scipy._lib import doccer
 from scipy.special import gammaln, digamma
 
-from scipy.stats._multivariate import multi_rv_generic, multi_rv_frozen, _doc_random_state,\
-    multivariate_normal, _PSD, _squeeze_output
+from scipy.stats._multivariate import (multi_rv_generic, multi_rv_frozen, _doc_random_state,
+                                       multivariate_normal, _PSD, _squeeze_output)
 from .multivariate_t_functions import _multivariate_t_random, _multivariate_t_cdf
 
 _LOG_2PI = np.log(2 * np.pi)
@@ -116,7 +116,7 @@ class multivariate_t_gen(multi_rv_generic):
     Examples
     --------
     >>> import matplotlib.pyplot as plt
-    >>> from student_mixture_old import multivariate_t
+    >>> from student_mixture import multivariate_t
 
     >>> x = np.linspace(0, 5, 10, endpoint=False)
     >>> y = multivariate_t.pdf(x, location=2.5, scale=0.5, dof=30); y
@@ -541,7 +541,7 @@ class multivariate_t_frozen(multi_rv_frozen):
         When called with the default parameters, this will create a 1D random
         variable with mean 0 and covariance 1:
 
-        >>> from student_mixture_old import multivariate_t
+        >>> from student_mixture import multivariate_t
         >>> r = multivariate_t()
         >>> r.location
         array([ 0.])

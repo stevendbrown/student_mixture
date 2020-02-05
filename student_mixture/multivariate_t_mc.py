@@ -52,12 +52,13 @@ def _multivariate_t_cdf_quasi_monte_carlo(x, chol, dof, tol=1e-4, max_evaluation
     Function for estimating the cdf of single sample 'x'.
     Adapted from MATLAB's mvtcdfqmc function.
     Algorithm based on:
-    Genz, A. and F. Bretz (1999) "Numerical Computation of Multivariate
-    t Probabilities with Application to Power Calculation of Multiple
-    Contrasts", J.Statist.Comput.Simul., 63:361-378.
-    [2] Genz, A. and F. Bretz (2002) "Comparison of Methods for the
-    Computation of Multivariate t Probabilities", J.Comp.Graph.Stat.,
-    11(4):950-971.
+    Genz, A., & Bretz, F. (1999). Numerical computation of multivariate
+    t-probabilities with application to power calculation of multiple
+    contrasts. Journal of Statistical Computation and Simulation, 63(4),
+    103-117.
+    Genz, A., & Bretz, F. (2002). Comparison of methods for the computation
+    of multivariate t probabilities. Journal of Computational and Graphical
+    Statistics, 11(4), 950-971.
 
     Parameters
     ----------

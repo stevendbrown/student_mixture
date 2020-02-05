@@ -5,9 +5,6 @@ from scipy.special import gammaln, digamma, polygamma
 from scipy.optimize import newton
 
 from sklearn.utils.extmath import row_norms
-
-import warnings
-
 from sklearn.utils import check_array
 
 
@@ -194,11 +191,11 @@ def _check_precisions(precisions, scale_type, n_components, n_features):
     _check_shape(precisions, precisions_shape[scale_type],
                  '%s precision' % scale_type)
 
-    _check_precisions = {'full': _check_precisions_full,
-                         'tied': _check_precision_matrix,
-                         'diag': _check_precision_positivity,
-                         'spherical': _check_precision_positivity}
-    _check_precisions[scale_type](precisions, scale_type)
+    _check_precisions_type = {'full': _check_precisions_full,
+                              'tied': _check_precision_matrix,
+                              'diag': _check_precision_positivity,
+                              'spherical': _check_precision_positivity}
+    _check_precisions_type[scale_type](precisions, scale_type)
     return precisions
 
 
@@ -317,7 +314,7 @@ def _estimate_student_scales_spherical(resp, gamma_priors, X, nk, locations, reg
         The variance values of each components.
     """
     return _estimate_student_scales_diag(resp, gamma_priors, X, nk,
-                                               locations, reg_scale).mean(1)
+                                         locations, reg_scale).mean(1)
 
 
 def _estimate_student_parameters(X, resp, gamma_priors, reg_scale, scale_type):
@@ -554,16 +551,17 @@ def _estimate_log_student_prob(X, locations, precisions_chol, scale_type, dofs):
     elif scale_type == 'diag':
         precisions = precisions_chol ** 2
         prob = (np.sum((locations ** 2 * precisions), 1) -
-                    2. * np.dot(X, (locations * precisions).T) +
-                    np.dot(X ** 2, precisions.T))
+                2. * np.dot(X, (locations * precisions).T) +
+                np.dot(X ** 2, precisions.T))
 
     else:
         precisions = precisions_chol ** 2
         prob = (np.sum(locations ** 2, 1) * precisions -
-                    2 * np.dot(X, locations.T * precisions) +
-                    np.outer(row_norms(X, squared=True), precisions))
+                2 * np.dot(X, locations.T * precisions) +
+                np.outer(row_norms(X, squared=True), precisions))
     log_prob = np.log(1 + (prob / dofs))
-    return gammaln(0.5*(dofs + n_features)) - gammaln(0.5 * dofs) -.5 * (n_features * np.log(dofs * np.pi) + (dofs + n_features) * log_prob) + log_det
+    return (gammaln(0.5*(dofs + n_features)) - gammaln(0.5 * dofs) + log_det -
+            0.5 * (n_features * np.log(dofs * np.pi) + (dofs + n_features) * log_prob))
 
 
 def _initialize_dofs(X, scales, scale_type, n_components, resp, gamma_priors, n_features, max_iter=100, tol=1e-3):

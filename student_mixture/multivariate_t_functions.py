@@ -5,7 +5,7 @@ import numpy as np
 from scipy.stats import t
 from scipy.stats._multivariate import multivariate_normal
 from scipy.stats._continuous_distns import chi2
-from .multivariate_t_cdf import _standard_t_cdf_bivariate, _standard_t_cdf_trivariate, _standard_t_cdf_multivariate
+from .multivariate_t_cdf import (_standard_t_cdf_univariate, _standard_t_cdf_bivariate, _standard_t_cdf_multivariate)
 
 ###############################################################################
 # Multivariate Student's t-distribution functions
@@ -74,18 +74,19 @@ def _multivariate_t_cdf(x, location, scale, dof, maxpts=1e+7, abseps=1e-6, relep
     if dof == np.inf:
         return multivariate_normal.cdf(x, mean=location, cov=scale, maxpts=maxpts, abseps=abseps,releps=releps)
 
+    dim = x.shape[1]
     if x.shape[1] == 1:
         return t.cdf(x, dof, loc=location, scale=np.sqrt(scale))
 
-    diag_scale = np.diag(scale)
+    diag_scale = np.diag(scale) if dim > 1 else scale
     inv_diag_scale = 1 / diag_scale
     sqrt_inv_diag_scale = np.sqrt(inv_diag_scale)
-    corr_mat = scale * np.outer(sqrt_inv_diag_scale, sqrt_inv_diag_scale)
-    y = np.dot(x - location, np.diag(sqrt_inv_diag_scale))
-    if x.shape[1] == 2:
+    y = np.dot(x - location, np.diag(sqrt_inv_diag_scale)) if dim > 1 else (x - location) * sqrt_inv_diag_scale
+    corr_mat = scale * np.outer(sqrt_inv_diag_scale, sqrt_inv_diag_scale) if dim > 1 else None
+    if x.shape[1] == 1:
+        f_cdf = _standard_t_cdf_univariate(y, dof, abseps=abseps, releps=releps)
+    elif x.shape[1] == 2:
         f_cdf = _standard_t_cdf_bivariate(y, corr_mat, dof, abseps=abseps, releps=releps)
-    elif x.shape[1] == 3:
-        f_cdf = _standard_t_cdf_trivariate(y, corr_mat, dof, abseps=abseps, releps=releps)
     else:
         f_cdf = _standard_t_cdf_multivariate(y, corr_mat, dof, tol=abseps, max_evaluations=maxpts)
 

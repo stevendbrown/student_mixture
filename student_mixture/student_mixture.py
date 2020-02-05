@@ -234,16 +234,18 @@ class StudentMixture(GaussianMixture):
 
         if self.locations_init is not None:
             self.locations_init = _check_locations(self.locations_init,
-                                           self.n_components, n_features)
+                                                   self.n_components,
+                                                   n_features)
 
         if self.precisions_init is not None:
             self.precisions_init = _check_precisions(self.precisions_init,
                                                      self.scale_type,
                                                      self.n_components,
                                                      n_features)
+
         if self.dofs_init is not None:
             self.dofs_init = _check_dofs(self.dofs_init,
-                                               self.n_components)
+                                         self.n_components)
 
     def _check_initial_parameters(self, X):
         """Check values of the basic parameters.
@@ -318,9 +320,11 @@ class StudentMixture(GaussianMixture):
 
         self.weights_ = (weights if self.weights_init is None
                          else self.weights_init)
-        self.locations_ = locations if self.locations_init is None else self.locations_init
+        self.locations_ = (locations if self.locations_init is None
+                           else self.locations_init)
         self.dofs_ = _initialize_dofs(
-            X, scales, self.scale_type, self.n_components, resp, gamma_priors, n_features
+            X, scales, self.scale_type, self.n_components,
+            resp, gamma_priors, n_features
         ) if self.dofs_init is None else self.dofs_init
 
         if self.precisions_init is None:
@@ -458,11 +462,12 @@ class StudentMixture(GaussianMixture):
         resp = np.exp(log_resp)
         self.weights_, self.locations_, self.scales_ = (
             _estimate_student_parameters(X, resp, gamma_priors, self.reg_scale,
-                                          self.scale_type))
+                                         self.scale_type))
         if not self.fixed_dofs:
             if self.algorithm == 'mcemc':
                 _, log_resp, gamma_priors = self._e_step(X)
-            self.dofs_ = _estimate_dofs(np.exp(log_resp), gamma_priors, self.dofs_, n_features)
+            self.dofs_ = _estimate_dofs(np.exp(log_resp), gamma_priors,
+                                        self.dofs_, n_features)
         self.weights_ /= n_samples
         self.precisions_cholesky_ = _compute_precision_cholesky(
             self.scales_, self.scale_type)
@@ -470,7 +475,8 @@ class StudentMixture(GaussianMixture):
     def _estimate_log_prob(self, X):
         """Estimate the log-probability of the model."""
         return _estimate_log_student_prob(
-            X, self.locations_, self.precisions_cholesky_, self.scale_type, self.dofs_)
+            X, self.locations_, self.precisions_cholesky_,
+            self.scale_type, self.dofs_)
 
     def _estimate_log_prob_resp(self, X):
         """Estimate log probabilities and responsibilities for each sample.
@@ -554,15 +560,15 @@ class StudentMixture(GaussianMixture):
         """Return the number of free parameters in the model."""
         _, n_features = self.locations_.shape
         if self.scale_type == 'full':
-            cov_params = self.n_components * n_features * (n_features + 1) / 2.
+            scale_params = self.n_components * n_features * (n_features + 1) / 2.
         elif self.scale_type == 'diag':
-            cov_params = self.n_components * n_features
+            scale_params = self.n_components * n_features
         elif self.scale_type == 'tied':
-            cov_params = n_features * (n_features + 1) / 2.
-        elif self.scale_type == 'spherical':
-            cov_params = self.n_components
+            scale_params = n_features * (n_features + 1) / 2.
+        else:
+            scale_params = self.n_components
         location_params = n_features * self.n_components
-        return int(cov_params + location_params + 2 * self.n_components - 1)
+        return int(scale_params + location_params + 2 * self.n_components - 1)
 
     def pdf(self, X):
         """Probability distribution function of the samples in X
@@ -685,7 +691,7 @@ class StudentMixture(GaussianMixture):
         if n_samples < 1:
             raise ValueError(
                 "Invalid value for 'n_samples': %d . The sampling requires at "
-                "least one sample." % (self.n_components))
+                "least one sample." % self.n_components)
 
         _, n_features = self.locations_.shape
         rng = check_random_state(self.random_state)
