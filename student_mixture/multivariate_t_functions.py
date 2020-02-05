@@ -3,12 +3,15 @@ from __future__ import division, print_function, absolute_import
 import numpy as np
 
 from scipy.stats import t
-from scipy.stats._multivariate import multivariate_normal
-from scipy.stats._continuous_distns import chi2
-from .multivariate_t_cdf import (_standard_t_cdf_univariate, _standard_t_cdf_bivariate, _standard_t_cdf_multivariate)
+from scipy.stats import chi2, multivariate_normal
+from .multivariate_t_cdf import (_standard_t_cdf_univariate,
+                                 _standard_t_cdf_bivariate,
+                                 _standard_t_cdf_trivariate,
+                                 _standard_t_cdf_multivariate)
 
 ###############################################################################
 # Multivariate Student's t-distribution functions
+
 
 def _multivariate_t_random(location, scale, dof, n_samples, random_state):
     """
@@ -26,8 +29,10 @@ def _multivariate_t_random(location, scale, dof, n_samples, random_state):
     n_samples : int
         Number of samples to generate, must be a positive integer
     random_state : int, RandomState instance or None, optional (default=None)
-        If int, random_state is the seed used by the random number generator; If RandomState instance, random_state is the
-        random number generator; If None, the random number generator is the RandomState instance used by numpy.random.
+        If int, random_state is the seed used by the random number generator;
+        If RandomState instance, random_state is the random number generator;
+        If None, the random number generator is the RandomState instance used by
+        numpy.random.
 
     Returns
     -------
@@ -72,7 +77,8 @@ def _multivariate_t_cdf(x, location, scale, dof, maxpts=1e+7, abseps=1e-6, relep
 
     """
     if dof == np.inf:
-        return multivariate_normal.cdf(x, mean=location, cov=scale, maxpts=maxpts, abseps=abseps,releps=releps)
+        return multivariate_normal.cdf(x, mean=location, cov=scale,
+                                       maxpts=maxpts, abseps=abseps, releps=releps)
 
     dim = x.shape[1]
     if x.shape[1] == 1:
@@ -84,9 +90,11 @@ def _multivariate_t_cdf(x, location, scale, dof, maxpts=1e+7, abseps=1e-6, relep
     y = np.dot(x - location, np.diag(sqrt_inv_diag_scale)) if dim > 1 else (x - location) * sqrt_inv_diag_scale
     corr_mat = scale * np.outer(sqrt_inv_diag_scale, sqrt_inv_diag_scale) if dim > 1 else None
     if x.shape[1] == 1:
-        f_cdf = _standard_t_cdf_univariate(y, dof, abseps=abseps, releps=releps)
+        f_cdf = _standard_t_cdf_univariate(y, dof)
     elif x.shape[1] == 2:
         f_cdf = _standard_t_cdf_bivariate(y, corr_mat, dof, abseps=abseps, releps=releps)
+    elif x.shape[1] == 3:
+        f_cdf = _standard_t_cdf_trivariate(y, corr_mat, dof, abseps=abseps, releps=releps)
     else:
         f_cdf = _standard_t_cdf_multivariate(y, corr_mat, dof, tol=abseps, max_evaluations=maxpts)
 
