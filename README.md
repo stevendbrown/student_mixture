@@ -1,3 +1,4 @@
+
 # Student's t-Mixture Model
 
 A Python implementation of "Robust mixture modelling using the t distribution" (Peel & McLachlan, 2000) and extensions.
@@ -41,11 +42,9 @@ If you used this package to estimate a mixture of Student's t-distributions, ple
 
 If you used this package to estimate a Student's t-distribution, please cite reference 3.
 
-# HEAD
 The implementations mentioned above are structurally based on scikit-learn's mixture module, so please also cite scikit-learn according to their suggested format, which can be found [here]([https://scikit-learn.org/stable/about.html#citing-scikit-learn](https://scikit-learn.org/stable/about.html#citing-scikit-learn)).
-=======
+
 The implementations above are structurally based on scikit-learn's mixture module, so please also cite scikit-learn according to their suggested format, which can be found [here]([https://scikit-learn.org/stable/about.html#citing-scikit-learn](https://scikit-learn.org/stable/about.html#citing-scikit-learn)).
->>>>>>> 194301d0b20537ef19b8eeffa24feb0bcce1a646
 
 If you used the multivariate Student's t-distribution module, please cite reference 8. As this module is structurally based on scipy's stats.multivariate module, please also cite scipy according to their suggested format, which can be found [here]([https://www.scipy.org/citing.html](https://www.scipy.org/citing.html)).
 
@@ -62,8 +61,4 @@ If you used the cumulative distribution function (CDF) for either a multivariate
 Omri Tomer (omritomer1@mail.tau.ac.il)
 
 # License
-<<<<<<< HEAD
 This package is distributed under the BSD 3-Clause License. See the LICENSE file for information.
-=======
-This package is distributed under the BSD 3-Clause License. See the LICENSE file for information.
->>>>>>> 194301d0b20537ef19b8eeffa24feb0bcce1a646
