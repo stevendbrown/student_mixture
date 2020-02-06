@@ -41,7 +41,7 @@ If you used this package to estimate a mixture of Student's t-distributions, ple
 
 If you used this package to estimate a Student's t-distribution, please cite reference 3.
 
-<<<<<<< HEAD
+# HEAD
 The implementations mentioned above are structurally based on scikit-learn's mixture module, so please also cite scikit-learn according to their suggested format, which can be found [here]([https://scikit-learn.org/stable/about.html#citing-scikit-learn](https://scikit-learn.org/stable/about.html#citing-scikit-learn)).
 =======
 The implementations above are structurally based on scikit-learn's mixture module, so please also cite scikit-learn according to their suggested format, which can be found [here]([https://scikit-learn.org/stable/about.html#citing-scikit-learn](https://scikit-learn.org/stable/about.html#citing-scikit-learn)).
