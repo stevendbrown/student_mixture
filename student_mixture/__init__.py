@@ -4,7 +4,7 @@
 
 __author__ = """Omri Tomer"""
 __email__ = 'omritomer1@mail.tau.ac.il'
-__version__ = '0.1.5'
+__version__ = '0.1.6'
 
 import sys
 
