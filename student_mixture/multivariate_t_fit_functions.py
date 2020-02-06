@@ -8,7 +8,6 @@ import numpy as np
 from scipy import linalg
 from scipy.special import gammaln, digamma, polygamma
 from scipy.optimize import newton
-from scipy.stats import chi2, multivariate_normal as mvn
 from sklearn.utils.extmath import row_norms
 from sklearn.utils import check_array
 
@@ -16,6 +15,7 @@ import warnings
 
 ###############################################################################
 # Functions to be used by the MultivariateTFit class
+
 
 def _check_X(X, n_features=None, ensure_min_samples=1):
     """Check the input data X.

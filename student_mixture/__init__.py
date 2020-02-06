@@ -15,7 +15,7 @@ if (sys.version_info < (3, 3)):
 
 else:
     from student_mixture.student_mixture import StudentMixture
-    from student_mixture.multivariate_t import multivariate_t  as MultivariateT
+    from student_mixture.multivariate_t import multivariate_t  as multivariate_t
     from student_mixture.mutlivariate_t_fit import MultivariateTFit
 
 __all__ = ['StudentMixture',

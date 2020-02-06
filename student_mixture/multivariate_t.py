@@ -57,7 +57,6 @@ mvt_docdict_noparams = {
 class multivariate_t_gen(multi_rv_generic):
     r"""
     A multivariate Student's t-distribution random variable.
-
     The `location` keyword specifies the location. The `scale` keyword specifies the
     scale matrix. The 'dof' keyword specifies the degrees-of-freedom.
 
@@ -82,11 +81,9 @@ class multivariate_t_gen(multi_rv_generic):
         Quantiles, with the last axis of `x` denoting the components.
     %(_mvt_doc_default_callparams)s
     %(_doc_random_state)s
-
     Alternatively, the object may be called (as a function) to fix the mean
     and covariance parameters, returning a "frozen" multivariate Student's
     random variable:
-
     rv = multivariate_t(location=None, scale=1, dof=None, allow_singular=False)
         - Frozen object with the same methods but holding the given
           mean and covariance fixed.
@@ -94,30 +91,23 @@ class multivariate_t_gen(multi_rv_generic):
     Notes
     -----
     %(_mvt_doc_callparams_note)s
-
     The scale matrix `scale` must be a (symmetric) positive
     semi-definite matrix. The determinant and inverse of `scale` are computed
     as the pseudo-determinant and pseudo-inverse, respectively, so
     that `scale` does not need to have full rank.
-
     The probability density function for `multivariate_t` is
-
     .. math::
-
         f(x) = \frac{\Gamma[(\nu+p)/2]}{\Gamma(\nu/2)\sqrt{(\pi \nu)^p |\Sigma|}}
                \left(1+\frac{1}{\nu} (x - \mu)^T \Sigma^{-1} (x - \mu) \right)^{-(\nu+p)/2}
-
     where :math:`\mu` is the location, :math:`\Sigma` the scale matrix,
     :math:`\nu` is the degrees-of-freedom, and :math:`k` is the
     dimension of the space where :math:`x` takes values.
-
     .. versionadded:: 0.0.1
 
     Examples
     --------
     >>> import matplotlib.pyplot as plt
     >>> from student_mixture import multivariate_t
-
     >>> x = np.linspace(0, 5, 10, endpoint=False)
     >>> y = multivariate_t.pdf(x, location=2.5, scale=0.5, dof=30); y
     array([ 0.00108914,  0.01033349,  0.05946514,  0.20755375,  0.43939129,
@@ -125,19 +115,16 @@ class multivariate_t_gen(multi_rv_generic):
     >>> fig1 = plt.figure()
     >>> ax = fig1.add_subplot(111)
     >>> ax.plot(x, y)
-
     The input quantiles can be any shape of array, as long as the last
     axis labels the components.  This allows us for instance to
     display the frozen pdf for a non-isotropic random variable in 2D as
     follows:
-
     >>> x, y = np.mgrid[-1:1:.01, -1:1:.01]
     >>> pos = np.dstack((x, y))
     >>> rv = multivariate_t([0.5, -0.2], [[2.0, 0.3], [0.3, 0.5]], 20)
     >>> fig2 = plt.figure()
     >>> ax2 = fig2.add_subplot(111)
     >>> ax2.contourf(x, y, rv.pdf(pos))
-
     """
 
     def __init__(self, seed=None):
@@ -147,20 +134,17 @@ class multivariate_t_gen(multi_rv_generic):
     def __call__(self, location=None, scale=1, dof=None, allow_singular=False, seed=None):
         """
         Create a frozen multivariate t distribution.
-
         See `multivariate_t_frozen` for more information.
-
         """
         return multivariate_t_frozen(location, scale, dof,
-                                          allow_singular=allow_singular,
-                                          seed=seed)
+                                     allow_singular=allow_singular,
+                                     seed=seed)
 
     def _process_parameters(self, dim, location, scale, dof):
         """
         Infer dimensionality from location or scale matrix, ensure that
         location and scale are full vector resp. matrix, and ensure that
         2 < dof.
-
         """
 
         # Try to infer dimensionality
@@ -230,7 +214,6 @@ class multivariate_t_gen(multi_rv_generic):
         """
         Adjust quantiles array so that last axis labels the components of
         each data point.
-
         """
         x = np.asarray(x, dtype=float)
 
@@ -267,7 +250,6 @@ class multivariate_t_gen(multi_rv_generic):
         -----
         As this function does no argument checking, it should not be
         called directly; use 'logpdf' instead.
-
         """
         if dof == np.inf:
             return multivariate_normal._logpdf(x, location, prec_U, log_det_scale, rank)
@@ -298,7 +280,6 @@ class multivariate_t_gen(multi_rv_generic):
         Notes
         -----
         %(_mvt_doc_callparams_note)s
-
         """
         dim, location, scale, dof = self._process_parameters(None, location, scale, dof)
         x = self._process_quantiles(x, dim)
@@ -324,7 +305,6 @@ class multivariate_t_gen(multi_rv_generic):
         Notes
         -----
         %(_mvt_doc_callparams_note)s
-
         """
         dim, location, scale, dof = self._process_parameters(None, location, scale, dof)
         x = self._process_quantiles(x, dim)
@@ -355,9 +335,7 @@ class multivariate_t_gen(multi_rv_generic):
         -----
         As this function does no argument checking, it should not be
         called directly; use 'cdf' instead.
-
         .. versionadded:: 1.0.0
-
         """
         if dof == np.inf:
             return multivariate_normal.cdf(x, location, scale, maxpts=maxpts, abseps=abseps, releps=releps)
@@ -390,9 +368,7 @@ class multivariate_t_gen(multi_rv_generic):
         Notes
         -----
         %(_mvt_doc_callparams_note)s
-
         .. versionadded:: 1.0.0
-
         """
         dim, location, scale, dof = self._process_parameters(None, location, scale, dof)
         x = self._process_quantiles(x, dim)
@@ -429,9 +405,7 @@ class multivariate_t_gen(multi_rv_generic):
         Notes
         -----
         %(_mvt_doc_callparams_note)s
-
         .. versionadded:: 1.0.0
-
         """
         dim, location, scale, dof = self._process_parameters(None, location, scale, dof)
         x = self._process_quantiles(x, dim)
@@ -462,7 +436,6 @@ class multivariate_t_gen(multi_rv_generic):
         Notes
         -----
         %(_mvt_doc_callparams_note)s
-
         """
         _, location, scale, dof = self._process_parameters(None, location, scale, dof)
         if dof == np.inf:
@@ -488,7 +461,6 @@ class multivariate_t_gen(multi_rv_generic):
         Notes
         -----
         %(_mvt_doc_callparams_note)s
-
         """
         if dof == np.inf:
             return multivariate_normal.entropy(location, scale)
@@ -540,7 +512,6 @@ class multivariate_t_frozen(multi_rv_frozen):
         --------
         When called with the default parameters, this will create a 1D random
         variable with mean 0 and covariance 1:
-
         >>> from student_mixture import multivariate_t
         >>> r = multivariate_t()
         >>> r.location
@@ -549,8 +520,8 @@ class multivariate_t_frozen(multi_rv_frozen):
         array([[1.]])
         >>> r.dof
         inf
-
         """
+
         self._dist = multivariate_t_gen(seed)
         self.dim, self.location, self.scale, self.dof = self._dist._process_parameters(
                                                             None, location, scale, dof)
@@ -590,7 +561,6 @@ class multivariate_t_frozen(multi_rv_frozen):
         -------
         h : scalar
             Entropy of the multivariate Student's t distribution
-
         """
         if self.dof == np.inf:
             return multivariate_normal.entropy(self.location, self.scale)
