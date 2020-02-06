@@ -4,13 +4,13 @@
 
 __author__ = """Omri Tomer"""
 __email__ = 'omritomer1@mail.tau.ac.il'
-__version__ = '0.1.6'
+__version__ = '0.1.8'
 
 import sys
 
 if (sys.version_info < (3, 3)):
     from student_mixture import StudentMixture
-    from multivariate_t import multivariate_t as MultivariateT
+    from multivariate_t import multivariate_t as multivariate_t
     from mutlivariate_t_fit import MultivariateTFit
 
 else:
@@ -19,5 +19,5 @@ else:
     from student_mixture.mutlivariate_t_fit import MultivariateTFit
 
 __all__ = ['StudentMixture',
-           'MultivariateT',
+           'multivariate_t',
            'MultivariateTFit']
