@@ -17,7 +17,7 @@ with open('README.md') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [str(r.req) for r in parse_requirements('requirements_dev.txt', session=False)]
+requirements = [str(r.req) for r in parse_requirements('requirements.txt', session=False)]
 
 setup_requirements = ['pytest-runner', ]
 
@@ -53,6 +53,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/omritomer/student_mixture',
-    version='0.1.11',
+    version='0.1.12',
     zip_safe=False,
 )
