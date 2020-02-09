@@ -17,10 +17,11 @@ from sklearn.exceptions import ConvergenceWarning
 from sklearn.utils import check_random_state
 from sklearn.utils.fixes import logsumexp
 
-from .student_mixture_functions import _check_weights, _check_X, _check_locations, _check_dofs, _check_precisions,\
-    _estimate_student_parameters, _compute_precision_cholesky, _compute_gamma_priors, _estimate_log_student_prob,\
-    _initialize_dofs, _estimate_dofs
-from .multivariate_t_functions import _multivariate_t_random, _multivariate_t_cdf
+from ._student_mixture_functions import (_check_weights, _check_X, _check_locations, _check_dofs, _check_precisions,
+                                         _estimate_student_parameters, _compute_precision_cholesky,
+                                         _compute_gamma_priors, _estimate_log_student_prob,
+                                         _initialize_dofs, _estimate_dofs)
+from ._multivariate_t_functions import _multivariate_t_random, _multivariate_t_cdf
 
 
 class StudentMixture(GaussianMixture):

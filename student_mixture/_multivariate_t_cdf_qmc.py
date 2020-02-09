@@ -78,7 +78,7 @@ def _multivariate_t_cdf_quasi_monte_carlo(x, chol, dof, tol=1e-4, max_evaluation
 
     prime = primes[0]
     fun_evaluations = 2 * n_repetitions * prime
-    T, sigma_squared = mvt_qmc(x, chol, dof, n_repetitions, prime, dim)
+    t, sigma_squared = mvt_qmc(x, chol, dof, n_repetitions, prime, dim)
     err = 3.5 * np.sqrt(sigma_squared)
 
     for i in range(1, len(primes)):
@@ -87,48 +87,47 @@ def _multivariate_t_cdf_quasi_monte_carlo(x, chol, dof, tol=1e-4, max_evaluation
         if fun_evaluations > max_evaluations:
             break
 
-        tau_hat, sigma_squared_tau_hat = mvt_qmc(x, chol, dof, n_repetitions, prime, dim)
+        t_hat, sigma_squared_tau_hat = mvt_qmc(x, chol, dof, n_repetitions, prime, dim)
 
-        T +=  sigma_squared * (tau_hat - T) / (sigma_squared + sigma_squared_tau_hat)
-
+        t += sigma_squared * (t_hat - t) / (sigma_squared + sigma_squared_tau_hat)
         sigma_squared *= sigma_squared_tau_hat / (sigma_squared_tau_hat + sigma_squared)
         err = 3.5 * np.sqrt(sigma_squared)
 
         if err < tol:
-            return T, err
-    return T, err
+            return t, err
+    return t, err
 
 
 def mvt_qmc(x, chol, dof, mc_repetitions, prime, dim):
-    p = halton_sample(prime, dim) # draw quasi-random lattice points from halton sequence
-    tau_hat = np.zeros(mc_repetitions)
+    p = halton_sample(prime, dim)  # draw quasi-random lattice points from halton sequence
+    t_hat = np.zeros(mc_repetitions)
 
     for rep in range(mc_repetitions):
         w = np.tile(np.random.uniform(low=0.0, high=1.0, size=dim), (prime, 1))
         v = abs(2 * ((p + w) % 1) - 1)
-        tau_hat[rep] = f_quasi_variable_switch(x, chol, dof, v, prime, dim)
+        t_hat[rep] = f_quasi_variable_separation(x, chol, dof, v, prime, dim)
 
-    return np.mean(tau_hat), np.var(tau_hat) / mc_repetitions
-
-
-def f_quasi_variable_switch(x, chol, dof, v, n_points, dim):
-    return 0.5 * (f_variable_switch(x, chol, dof, v, n_points, dim) +
-                  f_variable_switch(x, chol, dof, 1 - v, n_points, dim))
+    return np.mean(t_hat), np.var(t_hat) / mc_repetitions
 
 
-def f_variable_switch(x, chol, dof, v, n_points, dim, tail_tol=np.finfo(float).eps):
+def f_quasi_variable_separation(x, chol, dof, v, n_points, dim):
+    return 0.5 * (f_variable_separation(x, chol, dof, v, n_points, dim) +
+                  f_variable_separation(x, chol, dof, 1 - v, n_points, dim))
+
+
+def f_variable_separation(x, chol, dof, v, n_points, dim, tail_tol=np.finfo(float).eps):
     s = chiinv(v[:, -1], dof) / (dof ** 0.5)
     e = normcdf(s * x[0])
-    T = 1.0 * e
+    t = 1.0 * e
     y = np.zeros((n_points, dim))
 
     for i in range(1, dim):
         z = np.maximum(np.minimum(e * v[:, -1 - i], 1 - tail_tol), tail_tol)
         y[:, i - 1] = normicdf(z)
         e = normcdf(s * x[i] - np.dot(y, chol[:, i]))
-        T *= e
+        t *= e
 
-    return T.mean()
+    return t.mean()
 
 
 def normcdf(x):

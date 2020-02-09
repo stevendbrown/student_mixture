@@ -10,7 +10,7 @@ from scipy.special import gammaln, digamma
 
 from scipy.stats._multivariate import (multi_rv_generic, multi_rv_frozen, _doc_random_state,
                                        multivariate_normal, _PSD, _squeeze_output)
-from .multivariate_t_functions import _multivariate_t_random, _multivariate_t_cdf
+from ._multivariate_t_functions import _multivariate_t_random, _multivariate_t_cdf
 
 _LOG_2PI = np.log(2 * np.pi)
 _LOG_PI = np.log(np.pi)

@@ -191,7 +191,7 @@ def trivariate_integrand1(theta, b1, b2, b3, nu):
     sin_theta = np.sin(theta)
     cos_theta_squared = 1 - sin_theta ** 2
     y = (1 + tvt_f_i(sin_theta, cos_theta_squared, b2, b3) / nu) ** (-0.5)
-    return (y ** nu) * _standard_univariate_t_cdf(np.array([b1 * y]), nu)
+    return (y ** nu) * tcdf(b1 * y, nu)
 
 
 def trivariate_integrand2(theta, b1, b_j, b_k, rho_j1, rho_k1, rho_kj, nu):
@@ -199,7 +199,7 @@ def trivariate_integrand2(theta, b1, b_j, b_k, rho_j1, rho_k1, rho_kj, nu):
     cos_theta_squared = 1 - sin_theta ** 2
     y = (1 + tvt_f_i(sin_theta, cos_theta_squared, b1, b_j) / nu) ** (-0.5)
     u_hat = tvt_u_hat_k(sin_theta, cos_theta_squared, b1, b_j, b_k, rho_j1, rho_k1, rho_kj)
-    return (y ** nu) * _standard_univariate_t_cdf(np.array([u_hat * y]), nu)
+    return (y ** nu) * tcdf(u_hat * y, nu)
 
 
 def tvt_f_i(sin_theta, cos_theta_squared, b_j, b_k):
@@ -217,3 +217,8 @@ def tvt_u_hat_k(sin_theta, cos_theta_squared, b1, b_j, b_k, rho_j1, rho_k1, rho_
                      (cos_theta_squared - (rho_k1 * sin_theta_div_rho_j1) ** 2 -
                       rho_kj ** 2 + 2 * sin_theta_squared_times_rho_k1_div_rho_j1 * rho_kj))
     return u_numerator / (u_denominator ** 0.5)
+
+
+def tcdf(x, dof):
+    f = 0.5 * betainc(dof / 2.0, 0.5, dof / (dof + x ** 2))
+    return 1 - f if x >= 0 else f
