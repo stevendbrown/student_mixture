@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.special import erfc, erfcinv, gammaincinv
-from _halton import halton_sample
+from ._halton import halton_sample
 
 
 def _multivariate_t_cdf_single_sample(x, chol, dof, tol=1e-4, max_evaluations=1e+7):
