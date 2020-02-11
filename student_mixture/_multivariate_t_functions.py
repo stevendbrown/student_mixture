@@ -37,7 +37,8 @@ def _multivariate_t_random(location, scale, dof, n_samples, random_state, method
         numpy.random.
     method : str, default "pseudo"
         Generate either "pseudo" or "quasi" random
-        numbers from the distribution.
+        numbers from the distribution. "Quasi" random
+        numbers are drawn using Halton sequence
 
     Returns
     -------

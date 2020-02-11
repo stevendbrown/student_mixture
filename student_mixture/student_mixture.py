@@ -57,7 +57,7 @@ class StudentMixture(GaussianMixture):
         'em'
             Expectation-Maximization algorithm
         'mcecm'
-            Multicycle Expectation-Conditional-Maximization algorithm
+            Multicycle Expectation-Conditional-Maximization algorithm (not recommended)
 
     tol : float, defaults to 1e-3.
         The convergence threshold. EM iterations will stop when the

@@ -40,6 +40,7 @@ def _standard_bivariate_t_cdf(x, corr_mat, dof, abseps=1e-8, releps=1e-8):
     Genz, A. (2004). Numerical computation of rectangular bivariate
     and trivariate normal and t probabilities. Statistics and
     Computing, 14(3), 251-260.
+
     Parameters
     ----------
     x : array_like
@@ -84,7 +85,8 @@ def _standard_trivariate_t_cdf(x, corr_mat, dof, abseps=1e-8, releps=1e-8):
     Algorithm based on:
     Genz, A. (2004). Numerical computation of rectangular bivariate
     and trivariate normal and t probabilities. Statistics and
-    Computing, 14(3), 251-260..
+    Computing, 14(3), 251-260.
+
     Parameters
     ----------
     x : array_like
@@ -147,7 +149,8 @@ def _standard_trivariate_t_cdf(x, corr_mat, dof, abseps=1e-8, releps=1e-8):
 def _standard_multivariate_t_cdf(x, corr_mat, dof, tol=1e-4, max_evaluations=1e+7):
     """
     Wrapper function for _multivariate_t_cdf_single_sample
-    See multivariate_t_mc for more on algorithm
+    See multivariate_t_cdf_qmc for more on algorithm
+
     Parameters
     ----------
     x : array_like
