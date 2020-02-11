@@ -5,57 +5,18 @@ from __future__ import division, print_function, absolute_import
 
 import numpy as np
 
-from scipy._lib import doccer
 from scipy.special import gammaln, digamma
 
-from scipy.stats._multivariate import (multi_rv_generic, multi_rv_frozen, _doc_random_state,
+from scipy.stats._multivariate import (multi_rv_generic, multi_rv_frozen,
                                        multivariate_normal, _PSD, _squeeze_output)
-from ._multivariate_t_functions import _multivariate_t_random, _multivariate_t_cdf
+from _multivariate_t_functions import _multivariate_t_random, _multivariate_t_cdf
 
 _LOG_2PI = np.log(2 * np.pi)
 _LOG_PI = np.log(np.pi)
 
-_mvt_doc_default_callparams = """\
-location : array_like, optional
-    Location of the distribution (default zero)
-scale : array_like, optional
-    Scale matrix of the distribution (default one)
-dof : scalar, dof > 2, optional
-    Degrees-of-freedom of the distribution (default np.inf)
-allow_singular : bool, optional
-    Whether to allow a singular covariance matrix.  (Default: False)
-"""
-
-_mvt_doc_callparams_note = \
-    """Setting the parameter `location` to `None` is equivalent to having `location`
-    be the zero-vector. The parameter `scale` can be a scalar, in which case
-    the scale matrix is the identity times that value, a vector of
-    diagonal entries for the scale matrix, or a two-dimensional
-    array_like. The parameter 'dof' can be a scalar larger than 2. Setting it to
-    'None' is equivalent to np.inf, in which case the distribution is equivalent to
-    a multivariate normal distribution with mean=location and covariance=scale.
-    """
-
-_mvt_doc_frozen_callparams = ""
-
-_mvt_doc_frozen_callparams_note = \
-    """See class definition for a detailed description of parameters."""
-
-mvt_docdict_params = {
-    '_mvt_doc_default_callparams': _mvt_doc_default_callparams,
-    '_mvt_doc_callparams_note': _mvt_doc_callparams_note,
-    '_doc_random_state': _doc_random_state
-}
-
-mvt_docdict_noparams = {
-    '_mvt_doc_default_callparams': _mvt_doc_frozen_callparams,
-    '_mvt_doc_callparams_note': _mvt_doc_frozen_callparams_note,
-    '_doc_random_state': _doc_random_state
-}
-
 
 class multivariate_t_gen(multi_rv_generic):
-    r"""
+    """
     A multivariate Student's t-distribution random variable.
     The `location` keyword specifies the location. The `scale` keyword specifies the
     scale matrix. The 'dof' keyword specifies the degrees-of-freedom.
@@ -79,8 +40,6 @@ class multivariate_t_gen(multi_rv_generic):
     ----------
     x : array_like
         Quantiles, with the last axis of `x` denoting the components.
-    %(_mvt_doc_default_callparams)s
-    %(_doc_random_state)s
     Alternatively, the object may be called (as a function) to fix the mean
     and covariance parameters, returning a "frozen" multivariate Student's
     random variable:
@@ -90,7 +49,6 @@ class multivariate_t_gen(multi_rv_generic):
 
     Notes
     -----
-    %(_mvt_doc_callparams_note)s
     The scale matrix `scale` must be a (symmetric) positive
     semi-definite matrix. The determinant and inverse of `scale` are computed
     as the pseudo-determinant and pseudo-inverse, respectively, so
@@ -102,7 +60,6 @@ class multivariate_t_gen(multi_rv_generic):
     where :math:`\mu` is the location, :math:`\Sigma` the scale matrix,
     :math:`\nu` is the degrees-of-freedom, and :math:`k` is the
     dimension of the space where :math:`x` takes values.
-    .. versionadded:: 0.0.1
 
     Examples
     --------
@@ -129,7 +86,6 @@ class multivariate_t_gen(multi_rv_generic):
 
     def __init__(self, seed=None):
         super(multivariate_t_gen, self).__init__(seed)
-        self.__doc__ = doccer.docformat(self.__doc__, mvt_docdict_params)
 
     def __call__(self, location=None, scale=1, dof=None, allow_singular=False, seed=None):
         """
@@ -270,16 +226,17 @@ class multivariate_t_gen(multi_rv_generic):
         ----------
         x : array_like
             Quantiles, with the last axis of `x` denoting the components.
-        %(_mvt_doc_default_callparams)s
+        location : ndarray
+            Location of the distribution
+        scale : array_like
+            Scale matrix of the distribution
+        dof : scalar
+            Degrees-of-freedom of the distribution
 
         Returns
         -------
         pdf : ndarray or scalar
             Log of the probability density function evaluated at `x`
-
-        Notes
-        -----
-        %(_mvt_doc_callparams_note)s
         """
         dim, location, scale, dof = self._process_parameters(None, location, scale, dof)
         x = self._process_quantiles(x, dim)
@@ -295,16 +252,17 @@ class multivariate_t_gen(multi_rv_generic):
         ----------
         x : array_like
             Quantiles, with the last axis of `x` denoting the components.
-        %(_mvt_doc_default_callparams)s
+                location : ndarray
+            Location of the distribution
+        scale : array_like
+            Scale matrix of the distribution
+        dof : scalar
+            Degrees-of-freedom of the distribution
 
         Returns
         -------
         pdf : ndarray or scalar
             Probability density function evaluated at `x`
-
-        Notes
-        -----
-        %(_mvt_doc_callparams_note)s
         """
         dim, location, scale, dof = self._process_parameters(None, location, scale, dof)
         x = self._process_quantiles(x, dim)
@@ -335,7 +293,6 @@ class multivariate_t_gen(multi_rv_generic):
         -----
         As this function does no argument checking, it should not be
         called directly; use 'cdf' instead.
-        .. versionadded:: 1.0.0
         """
         if dof == np.inf:
             return multivariate_normal.cdf(x, location, scale, maxpts=maxpts, abseps=abseps, releps=releps)
@@ -351,7 +308,12 @@ class multivariate_t_gen(multi_rv_generic):
         ----------
         x : array_like
             Quantiles, with the last axis of `x` denoting the components.
-        %(_mvt_doc_default_callparams)s
+        location : ndarray
+            Location of the distribution
+        scale : array_like
+            Scale matrix of the distribution
+        dof : scalar
+            Degrees-of-freedom of the distribution
         maxpts: integer, optional
             The maximum number of points to use for integration
             (default `1000000*dim`)
@@ -364,11 +326,6 @@ class multivariate_t_gen(multi_rv_generic):
         -------
         cdf : ndarray or scalar
             Log of the cumulative distribution function evaluated at `x`
-
-        Notes
-        -----
-        %(_mvt_doc_callparams_note)s
-        .. versionadded:: 1.0.0
         """
         dim, location, scale, dof = self._process_parameters(None, location, scale, dof)
         x = self._process_quantiles(x, dim)
@@ -388,7 +345,12 @@ class multivariate_t_gen(multi_rv_generic):
         ----------
         x : array_like
             Quantiles, with the last axis of `x` denoting the components.
-        %(_mvt_doc_default_callparams)s
+        location : ndarray
+            Location of the distribution
+        scale : array_like
+            Scale matrix of the distribution
+        dof : scalar
+            Degrees-of-freedom of the distribution
         maxpts: integer, optional
             The maximum number of points to use for integration
             (default `1000000*dim`)
@@ -401,11 +363,6 @@ class multivariate_t_gen(multi_rv_generic):
         -------
         cdf : ndarray or scalar
             Cumulative distribution function evaluated at `x`
-
-        Notes
-        -----
-        %(_mvt_doc_callparams_note)s
-        .. versionadded:: 1.0.0
         """
         dim, location, scale, dof = self._process_parameters(None, location, scale, dof)
         x = self._process_quantiles(x, dim)
@@ -421,21 +378,21 @@ class multivariate_t_gen(multi_rv_generic):
         Draw random samples from a multivariate Student's t distribution.
 
         Parameters
-        ----------
-        %(_mvt_doc_default_callparams)s
-        size : integer, optional
-            Number of samples to draw (default 1).
-        %(_doc_random_state)s
+        location : ndarray
+            Location of the distribution
+        scale : array_like
+            Scale matrix of the distribution
+        dof : scalar
+            Degrees-of-freedom of the distribution
+        size : int
+            Number of samples to draw
+        random_state : np.random.RandomState, optional
 
         Returns
         -------
         rvs : ndarray or scalar
             Random variates of size (`size`, `N`), where `N` is the
             dimension of the random variable.
-
-        Notes
-        -----
-        %(_mvt_doc_callparams_note)s
         """
         _, location, scale, dof = self._process_parameters(None, location, scale, dof)
         if dof == np.inf:
@@ -451,7 +408,12 @@ class multivariate_t_gen(multi_rv_generic):
 
         Parameters
         ----------
-        %(_mvt_doc_default_callparams)s
+        location : ndarray
+            Location of the distribution
+        scale : array_like
+            Scale matrix of the distribution
+        dof : scalar
+            Degrees-of-freedom of the distribution
 
         Returns
         -------
@@ -460,7 +422,8 @@ class multivariate_t_gen(multi_rv_generic):
 
         Notes
         -----
-        %(_mvt_doc_callparams_note)s
+        References:
+
         """
         if dof == np.inf:
             return multivariate_normal.entropy(location, scale)
@@ -566,13 +529,3 @@ class multivariate_t_frozen(multi_rv_frozen):
             return multivariate_normal.entropy(self.location, self.scale)
         else:
             return self._dist.entropy(self.location, self.scale, self.dof)
-
-
-# Set frozen generator docstrings from corresponding docstrings in
-# multivariate_t_gen and fill in default strings in class docstrings
-for name in ['logpdf', 'pdf', 'logcdf', 'cdf', 'rvs']:
-    method = multivariate_t_gen.__dict__[name]
-    method_frozen = multivariate_t_frozen.__dict__[name]
-    method_frozen.__doc__ = doccer.docformat(method.__doc__,
-                                             mvt_docdict_noparams)
-    method.__doc__ = doccer.docformat(method.__doc__, mvt_docdict_params)
