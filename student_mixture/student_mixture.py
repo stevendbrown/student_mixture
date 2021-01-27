@@ -6,6 +6,7 @@
 import numpy as np
 
 from scipy import linalg
+from scipy.special import logsumexp
 
 from sklearn.mixture import GaussianMixture
 from sklearn.utils.validation import check_is_fitted
@@ -15,7 +16,6 @@ import warnings
 from sklearn import cluster
 from sklearn.exceptions import ConvergenceWarning
 from sklearn.utils import check_random_state
-from sklearn.utils.fixes import logsumexp
 
 from ._student_mixture_functions import (_check_weights, _check_X, _check_locations, _check_dofs, _check_precisions,
                                          _estimate_student_parameters, _compute_precision_cholesky,
