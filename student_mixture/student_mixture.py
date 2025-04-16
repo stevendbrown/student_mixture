@@ -261,7 +261,7 @@ class StudentMixture(GaussianMixture):
                              "non-negative"
                              % self.reg_scale)
                              
-        super()._check_initial_parameters(X)
+        super()._check_parameters(X)
 
         if self.algorithm not in ['em', 'mcecm']:
             raise ValueError("Invalid value for 'algorithm': %s "
@@ -398,7 +398,7 @@ class StudentMixture(GaussianMixture):
                     self.converged_ = True
                     break
 
-            self._print_verbose_msg_init_end(lower_bound)
+            self._print_verbose_msg_init_end(lower_bound, self.converged_)
 
             if lower_bound > max_lower_bound:
                 max_lower_bound = lower_bound

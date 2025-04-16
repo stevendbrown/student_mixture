@@ -17,7 +17,7 @@ with open('README.md') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [str(r.req) for r in parse_requirements('requirements.txt', session=False)]
+requirements = [str(r.requirement) for r in parse_requirements('requirements.txt', session=False)]
 
 setup_requirements = ['pytest-runner', ]
 

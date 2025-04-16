@@ -13,7 +13,7 @@ import warnings
 
 from sklearn.exceptions import ConvergenceWarning
 from sklearn.utils import check_random_state
-from sklearn.utils.fixes import logsumexp
+from scipy.special import logsumexp
 
 from ._multivariate_t_fit_functions import (_check_X, _check_location, _check_dof, _check_precision,
                                             _estimate_student_parameters, _compute_precision_cholesky,
