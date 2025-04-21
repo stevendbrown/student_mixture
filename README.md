@@ -22,9 +22,9 @@ python setup.py install
 ```
 
 # Requirements
-* numpy==1.17.3
-* scipy==1.3.1
-* scikit-learn==0.21.3
+* numpy>=1.17.3
+* scipy>=1.3.1
+* scikit-learn>=1.5.0
 
 # References
 
@@ -54,11 +54,8 @@ If you used the cumulative distribution function (CDF) for either a multivariate
 
 - If your data has four or more dimensions, please cite references 6 and 7.
 
-# Documentation
-[Student's t-Mixture Model]([https://student-mixture.readthedocs.io/](https://student-mixture.readthedocs.io/))
-
 # Authors
-Omri Tomer (omritomer1@mail.tau.ac.il)
+Omri Tomer (omritomer1990@gmail.com)
 
 # License
 This package is distributed under the BSD 3-Clause License. See the LICENSE file for information.
