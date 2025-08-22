@@ -304,7 +304,7 @@ class MultivariateTFit():
 
         self._initialize(X)
 
-        lower_bound = -np.infty
+        lower_bound = -np.inf
 
         for n_iter in range(1, self.max_iter + 1):
             prev_lower_bound = lower_bound
